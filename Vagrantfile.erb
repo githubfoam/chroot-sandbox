@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Build a build machine as the default
+  config.vm.define "vbox-chroot-01", primary: true, autostart: true do |build|
+    # set box to official CentOS 7 image
+    build.vm.box = "centos/7"
+    # explcitly set shared folder to virtualbox type. If not set will choose rsync 
+    # which is just a one-way share that is less useful in this context
+    build.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    build.vm.hostname = "vg-chroot-01"   
+    build.vm.network "private_network", ip: "10.2.2.10"
+    build.vm.network "private_network", ip: "fdac:218a:75e5:69c9::b0"
+    build.vm.provision "shell", inline: <<-SHELL
+        sed -i s/SELINUX=enforcing/SELINUX=permissive/g /etc/selinux/config
+    SHELL
+    build.vm.provision :reload
+    
+    #Install all requirements and perform initial setup
+    build.vm.provision "shell", inline: <<-SHELL
+    
+        ## install yum dependencies
+        yum install -y epel-release
+        yum clean all
+        yum install -y gcc\
+            kernel-devel\
+            kernel-headers\
+            dkms\
+            make\
+            bzip2\
+            perl\
+            mock\
+            git\
+            rpm-build\
+            rpmdevtools\
+            httpd\
+            createrepo\
+            genisoimage\
+            yum-utils\
+            createrepo\
+            mkisofs\
+            wget\
+            git\
+            syslinux\
+            isomd5sum
+        
+        #Setup chroot
+        cd /vagrant/scripts
+        ./build_chroot.sh /home/vagrant/chroot x86_64 7
+    SHELL
+  end
+end
