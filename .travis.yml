@@ -52,9 +52,8 @@ matrix:
         - pip install -r requirements.txt
       script:
           - sudo make deploy-libvirt
-          - sudo make deploy-vagrant                   
-          - sudo vagrant init --template scripts/Vagrantfile.erb
-          - sudo vagrant up
+          - sudo make deploy-vagrant                             
+          - sudo make deploy-vagrantfile 
       after_success:
         - deactivate      
 

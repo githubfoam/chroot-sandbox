@@ -10,7 +10,9 @@ vagrant plugin install vagrant-mutate #Convert vagrant boxes to work with differ
 
 vagrant box add "centos/7" --provider=virtualbox
 vagrant mutate "centos/7" libvirt
-vagrant init --template scripts/Vagrantfile.erb
+
+vagrant init --template templates/Vagrantfile.chroot.erb
+
 vagrant up --provider=libvirt vg-chroot-01
 
 #login wiht root
