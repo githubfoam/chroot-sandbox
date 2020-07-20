@@ -22,7 +22,7 @@ matrix:
           - sudo make deploy-vagrantfile 
           - sudo vagrant box add "centos/7" --provider=libvirt
           - sudo vagrant init --template templates/Vagrantfile.chroot.erb
-          - sudo vagrant up --provider=libvirt vg-chroot-01
+          - sudo vagrant up --provider=libvirt
       after_success:
         - deactivate      
 
