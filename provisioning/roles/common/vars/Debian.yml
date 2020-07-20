@@ -1,9 +1,0 @@
----
-system_packages:
-  - unzip
-  - tar
-  - socat
-  - traceroute
-  - mtr
-  - tcpdump
-  - net-tools

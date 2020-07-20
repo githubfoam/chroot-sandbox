@@ -3,7 +3,6 @@
 CHROOT_DIR=$1
 ARCHITECTURE=${2-"x86_64"}
 OS_VERSION=${3:-7}
-# PS_VERSION=${4:-"latest"}
 
 if [ "$(id -u)" != 0 ]; then
 	echo "Error: SuperUser privileges required to use this script."
@@ -26,6 +25,7 @@ EPEL_REPO="http://download.fedoraproject.org/pub/epel/$OS_VERSION/$ARCHITECTURE/
 
 
 CENTOS_RELEASE_RPM=$(wget -q -O- $CENTOS_REPO | grep -o -P "centos-release-.*?rpm" | head -1)
+
 EPEL_RELEASE_RPM=$(wget -q -O- $EPEL_REPO | grep -o -P "epel-release-.*?rpm" | head -1)
 if [ -z "$EPEL_RELEASE_RPM" ]; then
     EPEL_REPO="$EPEL_REPO/e"
@@ -47,11 +47,6 @@ done
 
 setarch $ARCHITECTURE yum --installroot=$CHROOT_DIR install -y rpm-build yum anaconda anaconda-runtime createrepo mkisofs
 
-
-#make sure web100 is available
-if [ "$OS_VERSION" -lt 7 ]; then
-    sed -i -e 's|enabled.*=.*|enabled = 1|' $CHROOT_DIR/etc/yum.repos.d/Internet2-web100_kernel.repo
-fi
 
 # Mount the virtual file systems in the chroot so we can build things properly
 mount --bind /proc $CHROOT_DIR/proc
