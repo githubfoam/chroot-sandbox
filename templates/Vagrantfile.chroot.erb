@@ -49,7 +49,9 @@ Vagrant.configure("2") do |config|
         
         #Setup chroot
         cd /vagrant/scripts
-        ./build_chroot.sh /home/vagrant/chroot x86_64 7
+        whoami && pwd
+        sudo bash build_chroot.sh /home/vagrant/chroot x86_64 7
+        # ./build_chroot.sh /home/vagrant/chroot x86_64 7
     SHELL
   end
 end
