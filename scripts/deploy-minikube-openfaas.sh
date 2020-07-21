@@ -8,10 +8,11 @@ set -o xtrace
 echo "=============================configure vagrant shared folder============================================================="
 echo "install aliases and augment path"
 
-for a in `find home -name "*" -type f` ; do
-  rm -f $VAGRANT_USER_HOME/`basename $a`
-  ln -rs $a /home/vagrant
-done
+# for a in `find home -name "*" -type f` ; do
+#   rm -f $VAGRANT_USER_HOME/`basename $a`
+#   ln -rs $a /home/vagrant
+# done
+
 echo "export PATH=$PATH:/vagrant/scripts/bin" >> $VAGRANT_USER_HOME/.bashrc
 
 
