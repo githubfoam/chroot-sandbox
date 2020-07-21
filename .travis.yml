@@ -93,7 +93,8 @@ matrix:
         - pip install -r requirements.txt
       script:
           - sudo make deploy-libvirt
-          - sudo make deploy-vagrant                                       
+          - sudo make deploy-vagrant          
+          - sudo vagrant plugin install vagrant-libvirt #The vagrant-libvirt plugin is required when using KVM on Linux                             
           - sudo vagrant box add "centos/8" --provider=libvirt          
           - sudo vagrant init --template templates/Vagrantfile.minikube.openfaas.erb
           - sudo vagrant up --provider=libvirt

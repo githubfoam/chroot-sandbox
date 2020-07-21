@@ -16,6 +16,37 @@ echo "export PATH=$PATH:/vagrant/scripts/bin" >> $VAGRANT_USER_HOME/.bashrc
 
 
 echo "=============================Install docker============================================================="
+# https://docs.docker.com/engine/install/centos/
+
+# Uninstall old versions
+yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
+# Install using the repository Set up the repository
+yum install -y yum-utils
+yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+# Install Docker Engine
+yum install -y docker-ce docker-ce-cli containerd.io
+
+# Start Docker
+systemctl start docker 
+systemctl status docker
+
+# add user to docker group
+usermod -aG docker vagrant
+
+# update the locale LANG
+update-locale LANG=en_US.UTF-8
 
 
 echo "=============================Install minikube============================================================="
