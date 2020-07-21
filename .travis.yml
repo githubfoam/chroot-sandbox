@@ -24,6 +24,7 @@ matrix:
     #   after_success:
     #     - deactivate     
 
+    # TESTING OK
     # - name: "typing Vagrantfile - bionic"
     #   dist: bionic
     #   language: python
@@ -41,25 +42,25 @@ matrix:
     #   after_success:
     #     - deactivate     
 
-    - name: "build Vagrantfile template centos/7 - bionic"
-      dist: bionic
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-          - sudo make deploy-libvirt
-          - sudo make deploy-vagrant                             
-          - sudo make deploy-vagrantfile 
-          - export VAGRANTBOX="centos/7"
-          - sudo vagrant box add $VAGRANTBOX --provider=libvirt
-          - sudo vagrant init --template templates/Vagrantfile.chroot.erb --var box_name=$VAGRANTBOX  
-          - sudo vagrant up --provider=libvirt vg-chroot-01
-      after_success:
-        - deactivate      
+    # - name: "build Vagrantfile template centos/7 - bionic"
+    #   dist: bionic
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #       - sudo make deploy-libvirt
+    #       - sudo make deploy-vagrant                             
+    #       - sudo make deploy-vagrantfile 
+    #       - export VAGRANTBOX="centos/7"
+    #       - sudo vagrant box add $VAGRANTBOX --provider=libvirt
+    #       - sudo vagrant init --template templates/Vagrantfile.chroot.erb --var box_name=$VAGRANTBOX  
+    #       - sudo vagrant up --provider=libvirt vg-chroot-01
+    #   after_success:
+    #     - deactivate      
 
     # - name: "build Vagrantfile template centos/8 - bionic"
     #   dist: bionic
@@ -81,26 +82,23 @@ matrix:
     #   after_success:
     #     - deactivate
 
-    # - name: "build minikube openfaas vagrant template - bionic"
-    #   dist: bionic
-    #   language: python
-    #   python: 3.7
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - pip install -r requirements.txt
-    #   script:
-    #       - sudo make deploy-libvirt
-    #       - sudo make deploy-vagrant                             
-    #       - sudo make deploy-vagrantfile 
-    #       - export VAGRANTBOX="ubuntu/eoan64"
-    #       - sudo vagrant box add $VAGRANTBOX --provider=virtualbox
-    #       - sudo vagrant mutate $VAGRANTBOX libvirt
-    #       - sudo vagrant init --template templates/Vagrantfile.minikube.openfaas.erb --var box_name=$VAGRANTBOX  
-    #       - sudo vagrant up --provider=libvirt
-    #   after_success:
-    #     - deactivate        
+    - name: "build minikube openfaas w chroot vagrant template - bionic"
+      dist: bionic
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+          - sudo make deploy-libvirt
+          - sudo make deploy-vagrant                                       
+          - sudo vagrant box add "centos/8" --provider=libvirt          
+          - sudo vagrant init --template templates/Vagrantfile.minikube.openfaas.erb
+          - sudo vagrant up --provider=libvirt
+      after_success:
+        - deactivate        
 
     # - name: "build modsecurity salt - bionic"
     #   dist: bionic

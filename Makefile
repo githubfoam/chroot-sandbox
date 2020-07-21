@@ -1,8 +1,8 @@
 IMAGE := alpine/fio
 APP:="scripts/usernetes-containerd.sh"
 
-deploy-vagrantfile:
-	bash scripts/deploy-vagrantfile.sh
+typing-vagrantfile:
+	bash scripts/typing-vagrantfile.sh
 
 deploy-boxes:
 	bash scripts/deploy-boxes.sh
