@@ -6,13 +6,8 @@ set -o xtrace
 # set -eox pipefail #safety for script
 
 echo "=============================configure vagrant shared folder============================================================="
-echo "install aliases and augment path"
 
-# for a in `find home -name "*" -type f` ; do
-#   rm -f $VAGRANT_USER_HOME/`basename $a`
-#   ln -rs $a /home/vagrant
-# done
-
+export VAGRANT_USER_HOME="/home/vagrant"
 echo "export PATH=$PATH:/vagrant/scripts/bin" >> $VAGRANT_USER_HOME/.bashrc
 
 
@@ -55,7 +50,7 @@ curl -LsO https://storage.googleapis.com/kubernetes-release/release/$(curl -s ht
 echo "=============================Install minikube============================================================="
 # https://github.com/kubernetes/minikube
 
-export VAGRANT_USER_HOME=/home/vagrant
+# export VAGRANT_USER_HOME=/home/vagrant
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$VAGRANT_USER_HOME
