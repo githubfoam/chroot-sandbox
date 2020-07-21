@@ -57,7 +57,8 @@ SHELL
   echo "################## building minikube #########################"  
     cd /vagrant/scripts
     chmod +x *.sh
-    ./deploy-minikube-openfaas
+    ./deploy-minikube-openfaas.sh
+    ./provision-k8s-registry.sh
   echo "################## finished building minikube #########################"    
   SHELL
 end
